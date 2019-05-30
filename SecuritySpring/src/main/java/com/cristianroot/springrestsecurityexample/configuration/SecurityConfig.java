@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Autowired
-	//configura user detailservce y password encoder
+
 	public void configureAuthenticationManager(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
@@ -61,12 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.cors().and()
 			.csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()//no quiero que cree sesiones
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()//filtro que autentica que el token est abien
+			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.addFilter(new AuthenticationTokenFilter(jwtProperties, authenticationManagerBean()))
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET).permitAll()
-			.anyRequest().hasAuthority(AuthorityName.ROLE_ADMIN.toString());
+			.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			.antMatchers(HttpMethod.POST).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			.antMatchers(HttpMethod.PUT).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			.anyRequest().permitAll();
 
 	}
 
