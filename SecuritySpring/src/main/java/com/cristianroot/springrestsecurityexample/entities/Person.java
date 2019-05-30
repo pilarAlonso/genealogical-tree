@@ -1,44 +1,28 @@
-/******************************************************************************
- * Copyright (c) 2019. Cristian Gonzalez Morante                              *
- ******************************************************************************/
-
 package com.cristianroot.springrestsecurityexample.entities;
-
-import com.cristianroot.springrestsecurityexample.constants.AuthorityName;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Entity
-public class Person implements UserDetails {
-
+public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
+	private Long id;
 	@NotNull
-	private String name;
-
-	@OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
-
+	private String name ;
 	@NotNull
-	private String password;
+	private String surname;
+	@NotNull
+	private int age;
+	@NotNull
+	private String country;
+	@NotNull
+	private Person father;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<Person> sons=new ArrayList<>();
 
-	@ManyToMany
-	private List<Authority> authorities;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	public Person() {
 	}
 
 	public String getName() {
@@ -49,42 +33,43 @@ public class Person implements UserDetails {
 		this.name = name;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities.stream()
-						  .map(Authority::getName)
-						  .map(AuthorityName::name)
-						  .map(SimpleGrantedAuthority::new)
-						  .collect(Collectors.toList());
+	public String getSurname() {
+		return surname;
 	}
 
-	@Override
-	public String getPassword() {
-		return password;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
-	@Override
-	public String getUsername() {
-		return name;
+	public int getAge() {
+		return age;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
+	public String getCountry() {
+		return country;
 	}
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	@Override
-	public boolean isEnabled() {
-		return true;
+	public Person getFather() {
+		return father;
+	}
+
+	public void setFather(Person father) {
+		this.father = father;
+	}
+
+	public List<Person> getSons() {
+		return sons;
+	}
+
+	public void setSons(List<Person> sons) {
+		this.sons = sons;
 	}
 }

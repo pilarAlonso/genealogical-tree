@@ -9,9 +9,10 @@ import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundExcep
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
 import com.cristianroot.springrestsecurityexample.exceptions.IllegalOperationException;
 import com.cristianroot.springrestsecurityexample.models.PersonModel;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface PersonService {
 
 	List<PersonModel> findAll();
