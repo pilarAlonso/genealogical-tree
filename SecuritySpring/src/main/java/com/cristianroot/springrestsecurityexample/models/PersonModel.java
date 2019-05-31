@@ -4,6 +4,7 @@ import com.cristianroot.springrestsecurityexample.entities.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PersonModel {
 
@@ -24,9 +25,7 @@ public class PersonModel {
 		return personModel;
 	}
 
-	public Long getId() {
-		return id;
-	}
+	public Optional<Long> getId() { return Optional.ofNullable(id); }
 
 	public void setId(Long id) {
 		this.id = id;

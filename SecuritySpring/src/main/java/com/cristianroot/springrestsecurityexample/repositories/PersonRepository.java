@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-	Optional<User> findByNameIgnoreCase(String name);
+	Optional<Person> findByNameIgnoreCase(String name);
 
+	Optional<Person> findById(Optional<Long> id);
 }

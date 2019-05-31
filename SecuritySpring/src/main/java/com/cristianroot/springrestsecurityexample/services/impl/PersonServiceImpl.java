@@ -4,6 +4,7 @@
 
 package com.cristianroot.springrestsecurityexample.services.impl;
 
+import com.cristianroot.springrestsecurityexample.entities.Person;
 import com.cristianroot.springrestsecurityexample.exceptions.DuplicatedEntityException;
 import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundException;
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
@@ -14,6 +15,7 @@ import com.cristianroot.springrestsecurityexample.services.PersonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,21 +34,44 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public PersonModel findOne(long id) throws EntityNotFoundException {
-		return null;
+		return personRepository.findById(id).map(PersonModel::from).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
 	}
 
 	@Override
 	public PersonModel save(PersonModel personModel) throws DuplicatedEntityException {
-		return null;
+		if (personRepository.findById(personModel.getId()).isPresent())
+			throw new DuplicatedEntityException();
+		Person person = new Person();
+		person.setName(personModel.getName());
+		person.setSurname(personModel.getSurname());
+		person.setAge(personModel.getAge());
+		person.setCountry(personModel.getCountry());
+		return PersonModel.from(personRepository.save(person));
+
 	}
 
 	@Override
 	public PersonModel update(long id, PersonModel personModel) throws EntityNotFoundException, DuplicatedEntityException, IdRequiredException, IllegalOperationException {
-		return null;
+		long modelId = personModel.getId().orElseThrow(IdRequiredException::new);
+		if (id != modelId) throw new IllegalOperationException("IDs doesn't match");
+		Person person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
+		Optional<Person> duplicatedPerson = personRepository.findByNameIgnoreCase(personModel.getName());
+		if (duplicatedPerson.isPresent()) {
+			if (duplicatedPerson.get().getId() != person.getId()) {
+				throw new DuplicatedEntityException();
+			}
+		}
+		if (personRepository.findByNameIgnoreCase(personModel.getName()).isPresent())
+			throw new DuplicatedEntityException();
+		person.setName(personModel.getName());
+		return PersonModel.from(personRepository.save(person));
+
 	}
 
 	@Override
 	public void delete(long id) throws EntityNotFoundException {
+		Person person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
+		personRepository.delete(person);
 
 	}
 }
