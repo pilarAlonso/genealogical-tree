@@ -4,13 +4,14 @@
 
 package com.cristianroot.springrestsecurityexample.repositories;
 
+import com.cristianroot.springrestsecurityexample.entities.Person;
 import com.cristianroot.springrestsecurityexample.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 @Repository
-public interface PersonRepository extends JpaRepository<User, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	Optional<User> findByNameIgnoreCase(String name);
 

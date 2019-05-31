@@ -25,36 +25,54 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+
 public class AuthenticationTokenFilter extends BasicAuthenticationFilter {
 
 	private final JwtProperties jwtProperties;
 
 	public AuthenticationTokenFilter(JwtProperties jwtProperties, AuthenticationManager authenticationManager) {
+
 		super(authenticationManager);
+
 		this.jwtProperties = jwtProperties;
+
 	}
 
 	@Override
+
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
 		String token = request.getHeader(jwtProperties.getHeader());
 
 		if (token == null || !token.startsWith(jwtProperties.getPrefix())) {
+
 			filterChain.doFilter(request, response);
+
 			return;
+
 		}
+
+		// Remove the prefix
 
 		token = token.replace(jwtProperties.getPrefix(), "");
 
+		// Read and validate the jwt
+
 		Jws<Claims> jws = Jwts.parser()
+
 							  .setSigningKey(jwtProperties.getSecret().getBytes())
+
 							  .parseClaimsJws(token);
 
+		// Get the authorities and username from token and autenticate with them
+
 		List<GrantedAuthority> authorities = ((List<String>) jws.getBody().get("authorities")).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(jws.getBody().getSubject(), token, authorities);
-		
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		filterChain.doFilter(request, response);
-	}
 
+	}
 }

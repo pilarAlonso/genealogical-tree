@@ -1,5 +1,7 @@
 package com.cristianroot.springrestsecurityexample.entities;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -17,7 +19,6 @@ public class Person {
 	private int age;
 	@NotNull
 	private String country;
-	@NotNull
 	private Person father;
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Person> sons=new ArrayList<>();

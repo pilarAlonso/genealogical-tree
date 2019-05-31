@@ -65,10 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.addFilter(new AuthenticationTokenFilter(jwtProperties, authenticationManagerBean()))
 			.authorizeRequests()
-			.antMatchers(HttpMethod.GET).permitAll()
-			.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			.antMatchers(HttpMethod.POST).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			.antMatchers(HttpMethod.PUT).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			//.antMatchers(HttpMethod.GET).permitAll()
+			//.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			//.antMatchers(HttpMethod.POST).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			//.antMatchers(HttpMethod.PUT).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
 			.anyRequest().permitAll();
 
 	}

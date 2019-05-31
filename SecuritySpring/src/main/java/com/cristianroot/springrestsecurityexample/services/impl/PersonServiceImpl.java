@@ -14,6 +14,7 @@ import com.cristianroot.springrestsecurityexample.services.PersonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -26,7 +27,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<PersonModel> findAll() {
-		return null;
+		return personRepository.findAll().stream().map(PersonModel::from).collect(Collectors.toList());
 	}
 
 	@Override
