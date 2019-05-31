@@ -8,6 +8,7 @@ import com.cristianroot.springrestsecurityexample.exceptions.DuplicatedEntityExc
 import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundException;
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
 import com.cristianroot.springrestsecurityexample.exceptions.IllegalOperationException;
+import com.cristianroot.springrestsecurityexample.models.FamilyModel;
 import com.cristianroot.springrestsecurityexample.models.PersonModel;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ import java.util.List;
 @Service
 public interface PersonService {
 
-	List<PersonModel> findAll();
+	List<FamilyModel> findAll();
 
-	PersonModel findOne(long id) throws EntityNotFoundException;
+	FamilyModel findOne(long id) throws EntityNotFoundException;
 
 	PersonModel save(PersonModel personModel) throws DuplicatedEntityException, EntityNotFoundException;
 

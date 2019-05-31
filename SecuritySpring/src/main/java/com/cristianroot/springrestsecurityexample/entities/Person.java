@@ -6,11 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	@NotNull
 	private String name ;
 	@NotNull
@@ -21,15 +22,8 @@ public class Person {
 	private String country;
 	@ManyToOne
 	private Person father;
-	@OneToMany(mappedBy = "father")
+	@OneToMany(mappedBy = "father",cascade ={CascadeType.REMOVE,CascadeType.REFRESH})
 	private List<Person> sons=new ArrayList<>();
-
-	public Person(Person father,long id) {
-		this.father = father;
-	}
-
-	public Person() {
-	}
 
 	public Long getId() {
 		return id;

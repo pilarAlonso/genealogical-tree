@@ -9,6 +9,7 @@ import com.cristianroot.springrestsecurityexample.exceptions.DuplicatedEntityExc
 import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundException;
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
 import com.cristianroot.springrestsecurityexample.exceptions.IllegalOperationException;
+import com.cristianroot.springrestsecurityexample.models.FamilyModel;
 import com.cristianroot.springrestsecurityexample.models.PersonModel;
 import com.cristianroot.springrestsecurityexample.repositories.PersonRepository;
 import com.cristianroot.springrestsecurityexample.services.PersonService;
@@ -28,19 +29,20 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public List<PersonModel> findAll() {
-		return personRepository.findAll().stream().map(PersonModel::from).collect(Collectors.toList());
+	public List<FamilyModel> findAll() {
+		return personRepository.findAll().stream().map(FamilyModel::from).collect(Collectors.toList());
 	}
 
 	@Override
-	public PersonModel findOne(long id) throws EntityNotFoundException {
-		return personRepository.findById(id).map(PersonModel::from).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
+	public FamilyModel findOne(long id) throws EntityNotFoundException {
+		return personRepository.findById(id).map(FamilyModel::from).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
 	}
 
 	@Override
 	public PersonModel save(PersonModel personModel) throws DuplicatedEntityException, EntityNotFoundException {
 		if(personRepository.findById(personModel.getId()).isPresent())throw new DuplicatedEntityException();
 		long idFather = personModel.getFather().getId();
+
 		Person person=new Person();
 		person.setName(personModel.getName());
 		person.setSurname(personModel.getSurname());

@@ -2,35 +2,37 @@ package com.cristianroot.springrestsecurityexample.models;
 
 import com.cristianroot.springrestsecurityexample.entities.Person;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class PersonModel {
-
-
+public class FamilyModel {
 	private Long id;
-	@NotNull
 	private String name;
-	@NotNull
 	private String surname;
 	private int age;
 	private String country;
-	private Person father;
+	private List<FamilyModel>sonModelList=new ArrayList<>();
 
-	public static PersonModel from(Person person) {
-		PersonModel personModel = new PersonModel();
-		personModel.setName(person.getName());
-		personModel.setAge(person.getAge());
-		personModel.setId(person.getId());
-		personModel.setCountry(person.getCountry());
-		personModel.setSurname(person.getSurname());
-
-		return personModel;
+	public List<FamilyModel> getSonModelList() {
+		return sonModelList;
 	}
 
-	public Optional<Long> getId() { return Optional.ofNullable(id); }
+	public static FamilyModel from(Person person) {
+		FamilyModel familyModel = new FamilyModel();
+		familyModel.setName(person.getName());
+		familyModel.setAge(person.getAge());
+		familyModel.setId(person.getId());
+		familyModel.setCountry(person.getCountry());
+		familyModel.setSurname(person.getSurname());
+		familyModel.setSonModelList(person.getSons().stream().map(FamilyModel::from).collect(Collectors.toList()));
+
+		return familyModel;
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -68,13 +70,8 @@ public class PersonModel {
 		this.country = country;
 	}
 
-	public Person getFather() {
-		return father;
+	public void setSonModelList(List<FamilyModel> sonModelList) {
+		this.sonModelList = sonModelList;
 	}
-
-	public void setFather(Person father) {
-		this.father = father;
-	}
-
 
 }

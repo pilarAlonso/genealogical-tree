@@ -5,6 +5,7 @@ import com.cristianroot.springrestsecurityexample.exceptions.DuplicatedEntityExc
 import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundException;
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
 import com.cristianroot.springrestsecurityexample.exceptions.IllegalOperationException;
+import com.cristianroot.springrestsecurityexample.models.FamilyModel;
 import com.cristianroot.springrestsecurityexample.models.PersonModel;
 import com.cristianroot.springrestsecurityexample.services.PersonService;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +22,17 @@ public class PersonController {
 	}
 
 	@GetMapping("/people")
-	public List<PersonModel> findAll() {
+	public List<FamilyModel> findAll() {
 		return personService.findAll();
 	}
 
 	@GetMapping("/people/{id}")
-	public PersonModel findOne(@PathVariable long id) throws EntityNotFoundException {
+	public FamilyModel findOne(@PathVariable long id) throws EntityNotFoundException {
 		return personService.findOne(id);
 	}
 
 	@PostMapping("/people")
-	public PersonModel save(@Valid @RequestBody PersonModel personModel) throws DuplicatedEntityException, DuplicatedEntityException {
+	public PersonModel save(@Valid @RequestBody PersonModel personModel) throws DuplicatedEntityException, DuplicatedEntityException, EntityNotFoundException {
 		return personService.save(personModel);
 	}
 
