@@ -20,7 +20,6 @@ public class PersonModel {
 		PersonModel personModel = new PersonModel();
 		personModel.setAge(person.getAge());
 		personModel.setCountry(person.getCountry());
-		personModel.setFather(person.getFather());
 		personModel.setSurname(person.getSurname());
 		return personModel;
 	}

@@ -10,28 +10,30 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class User implements UserDetails {
+public class UserApp implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@NotNull
 	private String name;
-
-	@OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
-
-	@NotNull
 	private String password;
-
 	@ManyToMany
 	private List<Authority> authorities;
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities.stream()
+						  .map(Authority::getName)
+						  .map(AuthorityName::name)
+						  .map(SimpleGrantedAuthority::new)
+						  .collect(Collectors.toList());
+	}
 
 	public long getId() {
 		return id;
@@ -49,13 +51,12 @@ public class User implements UserDetails {
 		this.name = name;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities.stream()
-						  .map(Authority::getName)
-						  .map(AuthorityName::name)
-						  .map(SimpleGrantedAuthority::new)
-						  .collect(Collectors.toList());
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override

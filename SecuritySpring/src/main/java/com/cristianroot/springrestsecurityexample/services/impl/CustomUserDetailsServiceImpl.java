@@ -4,8 +4,7 @@
 
 package com.cristianroot.springrestsecurityexample.services.impl;
 
-import com.cristianroot.springrestsecurityexample.repositories.PersonRepository;
-import com.cristianroot.springrestsecurityexample.repositories.UserRepository;
+import com.cristianroot.springrestsecurityexample.repositories.UserAppRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,16 +13,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
-	private final UserRepository userRepository;
+	private final UserAppRepository userAppRepository;
 
-	public CustomUserDetailsServiceImpl( UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public CustomUserDetailsServiceImpl( UserAppRepository userAppRepository) {
+		this.userAppRepository = userAppRepository;
 
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findByNameIgnoreCase(username).orElseThrow(() -> new UsernameNotFoundException(String.format("No user found with username '%s'.", username)));
+		return userAppRepository.findByNameIgnoreCase(username).orElseThrow(() -> new UsernameNotFoundException(String.format("No user found with username '%s'.", username)));
 	}
 
 }
