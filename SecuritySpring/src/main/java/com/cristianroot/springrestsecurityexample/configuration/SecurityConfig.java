@@ -86,13 +86,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilter(new AuthenticationTokenFilter(jwtProperties, authenticationManagerBean()))
 
 			.authorizeRequests()
-
+            //funciona
 			.antMatchers(HttpMethod.GET).permitAll()
-
-
+			.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
 			.antMatchers("/auth/login").permitAll()
+			.anyRequest().hasAnyRole("ADMIN", "USER");
 
-			.anyRequest().hasAuthority(AuthorityName.ROLE_ADMIN.toString());
+
 
 	}
 

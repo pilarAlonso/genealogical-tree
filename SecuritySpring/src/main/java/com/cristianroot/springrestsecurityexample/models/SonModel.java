@@ -4,7 +4,7 @@ import com.cristianroot.springrestsecurityexample.entities.Person;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
-
+//revisar
 public class SonModel {
 
 	private Long id;
@@ -23,7 +23,7 @@ public class SonModel {
 		sonModel.setId(person.getId());
 		sonModel.setCountry(person.getCountry());
 		sonModel.setSurname(person.getSurname());
-		//personModel.setFather(person.getFather());
+		sonModel.setFather(person.getFather());
 		return sonModel;
 	}
 

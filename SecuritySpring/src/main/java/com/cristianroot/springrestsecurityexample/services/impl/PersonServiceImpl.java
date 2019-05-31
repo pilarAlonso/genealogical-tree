@@ -37,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
 	public FatherModel findOne(long id) throws EntityNotFoundException {
 		return personRepository.findById(id).map(FatherModel::from).orElseThrow(() -> new EntityNotFoundException(Person.class, id));
 	}
-
+    //añadir excepciones
 	@Override
 	public SonModel save(SonModel sonModel) throws DuplicatedEntityException, EntityNotFoundException {
 		if (personRepository.findById(sonModel.getId()).isPresent()) throw new DuplicatedEntityException();
@@ -51,6 +51,7 @@ public class PersonServiceImpl implements PersonService {
 		return SonModel.from(personRepository.save(person));
 
 	}
+    //falla el padre se queda null
 
 	@Override
 	public SonModel update(long id, SonModel sonModel) throws EntityNotFoundException, DuplicatedEntityException, IdRequiredException, IllegalOperationException {
