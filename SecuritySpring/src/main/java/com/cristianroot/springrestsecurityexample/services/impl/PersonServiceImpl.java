@@ -64,6 +64,9 @@ public class PersonServiceImpl implements PersonService {
 		if (personRepository.findByNameIgnoreCase(personModel.getName()).isPresent())
 			throw new DuplicatedEntityException();
 		person.setName(personModel.getName());
+		person.setCountry(personModel.getCountry());
+		person.setAge(personModel.getAge());
+		person.setSurname(person.getSurname());
 		return PersonModel.from(personRepository.save(person));
 
 	}
