@@ -38,14 +38,15 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public PersonModel save(PersonModel personModel) throws DuplicatedEntityException {
-		if (personRepository.findById(personModel.getId()).isPresent())
-			throw new DuplicatedEntityException();
-		Person person = new Person();
+	public PersonModel save(PersonModel personModel) throws DuplicatedEntityException, EntityNotFoundException {
+		if(personRepository.findById(personModel.getId()).isPresent())throw new DuplicatedEntityException();
+		long idFather = personModel.getFather().getId();
+		Person person=new Person();
 		person.setName(personModel.getName());
 		person.setSurname(personModel.getSurname());
 		person.setAge(personModel.getAge());
 		person.setCountry(personModel.getCountry());
+		person.setFather(personRepository.findById(idFather).orElseThrow(() -> new EntityNotFoundException(Person.class, idFather)));
 		return PersonModel.from(personRepository.save(person));
 
 	}

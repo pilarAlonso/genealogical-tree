@@ -11,9 +11,13 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
 	private String name ;
+	@NotNull
 	private String surname;
+	@NotNull
 	private int age;
+	@NotNull
 	private String country;
 	@ManyToOne
 	private Person father;
