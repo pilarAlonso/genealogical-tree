@@ -1,12 +1,11 @@
 package com.cristianroot.springrestsecurityexample.controllers;
 
-import com.cristianroot.springrestsecurityexample.entities.Person;
 import com.cristianroot.springrestsecurityexample.exceptions.DuplicatedEntityException;
 import com.cristianroot.springrestsecurityexample.exceptions.EntityNotFoundException;
 import com.cristianroot.springrestsecurityexample.exceptions.IdRequiredException;
 import com.cristianroot.springrestsecurityexample.exceptions.IllegalOperationException;
-import com.cristianroot.springrestsecurityexample.models.FamilyModel;
-import com.cristianroot.springrestsecurityexample.models.PersonModel;
+import com.cristianroot.springrestsecurityexample.models.FatherModel;
+import com.cristianroot.springrestsecurityexample.models.SonModel;
 import com.cristianroot.springrestsecurityexample.services.PersonService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,23 +21,23 @@ public class PersonController {
 	}
 
 	@GetMapping("/people")
-	public List<FamilyModel> findAll() {
+	public List<FatherModel> findAll() {
 		return personService.findAll();
 	}
 
 	@GetMapping("/people/{id}")
-	public FamilyModel findOne(@PathVariable long id) throws EntityNotFoundException {
+	public FatherModel findOne(@PathVariable long id) throws EntityNotFoundException {
 		return personService.findOne(id);
 	}
 
 	@PostMapping("/people")
-	public PersonModel save(@Valid @RequestBody PersonModel personModel) throws DuplicatedEntityException, DuplicatedEntityException, EntityNotFoundException {
-		return personService.save(personModel);
+	public SonModel save(@Valid @RequestBody SonModel sonModel) throws DuplicatedEntityException, DuplicatedEntityException, EntityNotFoundException {
+		return personService.save(sonModel);
 	}
 
 	@PutMapping("/people/{id}")
-	public PersonModel update(@PathVariable long id, @RequestBody PersonModel personModel) throws DuplicatedEntityException, IllegalOperationException, IdRequiredException, EntityNotFoundException {
-		return personService.update(id, personModel);
+	public SonModel update(@PathVariable long id, @RequestBody SonModel sonModel) throws DuplicatedEntityException, IllegalOperationException, IdRequiredException, EntityNotFoundException {
+		return personService.update(id, sonModel);
 	}
 
 	@DeleteMapping("/people/{id}")

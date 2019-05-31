@@ -7,7 +7,6 @@ package com.cristianroot.springrestsecurityexample.configuration;
 import com.cristianroot.springrestsecurityexample.components.AuthenticationTokenFilter;
 import com.cristianroot.springrestsecurityexample.constants.AuthorityName;
 import com.cristianroot.springrestsecurityexample.constants.properties.JwtProperties;
-import com.cristianroot.springrestsecurityexample.services.impl.CustomUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,49 +26,73 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userDetailsService;
+
 	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
 	private final JwtProperties jwtProperties;
 
-	public SecurityConfig(CustomUserDetailsServiceImpl userDetailsService, RestAuthenticationEntryPoint restAuthenticationEntryPoint, JwtProperties jwtProperties) {
+	public SecurityConfig(UserDetailsService userDetailsService, RestAuthenticationEntryPoint restAuthenticationEntryPoint, JwtProperties jwtProperties) {
+
 		this.userDetailsService = userDetailsService;
+
 		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+
 		this.jwtProperties = jwtProperties;
+
 	}
 
 	@Bean
+
 	@Override
+
 	public AuthenticationManager authenticationManagerBean() throws Exception {
+
 		return super.authenticationManagerBean();
+
 	}
 
 	@Bean
+
 	public PasswordEncoder passwordEncoder() {
+
 		return new BCryptPasswordEncoder();
+
 	}
 
 	@Autowired
 
 	public void configureAuthenticationManager(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
 	}
 
 	@Override
+
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and()
+
 			.csrf().disable()
+
 			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
 			.addFilter(new AuthenticationTokenFilter(jwtProperties, authenticationManagerBean()))
+
 			.authorizeRequests()
-			//.antMatchers(HttpMethod.GET).permitAll()
-			//.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			//.antMatchers(HttpMethod.POST).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			//.antMatchers(HttpMethod.PUT).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			.anyRequest().permitAll();
+
+			.antMatchers(HttpMethod.GET).permitAll()
+
+
+			.antMatchers("/auth/login").permitAll()
+
+			.anyRequest().hasAuthority(AuthorityName.ROLE_ADMIN.toString());
 
 	}
 

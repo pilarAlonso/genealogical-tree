@@ -23,7 +23,7 @@ public class Authority {
 	private AuthorityName name;
 
 	@ManyToMany(mappedBy = "authorities")
-	private List<UserApp> people;
+	private List<UserApp> userApp;
 
 	public long getId() {
 		return id;
@@ -42,10 +42,10 @@ public class Authority {
 	}
 
 	public List<UserApp> getPeople() {
-		return people;
+		return userApp;
 	}
 
 	public void setPeople(List<UserApp> people) {
-		this.people = people;
+		this.userApp = people;
 	}
 }

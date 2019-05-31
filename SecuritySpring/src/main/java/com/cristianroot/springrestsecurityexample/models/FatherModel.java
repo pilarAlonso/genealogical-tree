@@ -6,28 +6,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FamilyModel {
+public class FatherModel {
 	private Long id;
 	private String name;
 	private String surname;
 	private int age;
 	private String country;
-	private List<FamilyModel>sonModelList=new ArrayList<>();
+	private List<FatherModel> sonModelList = new ArrayList<>();
 
-	public List<FamilyModel> getSonModelList() {
+	public List<FatherModel> getSonModelList() {
 		return sonModelList;
 	}
 
-	public static FamilyModel from(Person person) {
-		FamilyModel familyModel = new FamilyModel();
-		familyModel.setName(person.getName());
-		familyModel.setAge(person.getAge());
-		familyModel.setId(person.getId());
-		familyModel.setCountry(person.getCountry());
-		familyModel.setSurname(person.getSurname());
-		familyModel.setSonModelList(person.getSons().stream().map(FamilyModel::from).collect(Collectors.toList()));
+	public static FatherModel from(Person person) {
+		FatherModel fatherModel = new FatherModel();
+		fatherModel.setName(person.getName());
+		fatherModel.setAge(person.getAge());
+		fatherModel.setId(person.getId());
+		fatherModel.setCountry(person.getCountry());
+		fatherModel.setSurname(person.getSurname());
+		fatherModel.setSonModelList(person.getSons().stream().map(FatherModel::from).collect(Collectors.toList()));
 
-		return familyModel;
+		return fatherModel;
 	}
 
 	public Long getId() {
@@ -70,7 +70,7 @@ public class FamilyModel {
 		this.country = country;
 	}
 
-	public void setSonModelList(List<FamilyModel> sonModelList) {
+	public void setSonModelList(List<FatherModel> sonModelList) {
 		this.sonModelList = sonModelList;
 	}
 
