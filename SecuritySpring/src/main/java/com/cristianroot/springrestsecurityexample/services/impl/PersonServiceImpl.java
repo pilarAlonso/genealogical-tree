@@ -92,10 +92,10 @@ public class PersonServiceImpl implements PersonService {
 		}
 		if (personModel.getSonModel() != 0) {
 			personRepository.findById(personModel.getSonModel()).orElseThrow(() -> new EntityNotFoundException(Person.class, personModel.getSonModel()));
-			Person person1=personRepository.findById(personModel.getSonModel()).get();
-            person.addSon(person1);
+			Person person1 = personRepository.findById(personModel.getSonModel()).get();
+			person.addSon(person1);
+			
 			personModel.setSonList(person.getSons().stream().map(PersonModel::from).collect(Collectors.toList()));
-
 		}
 
 		return PersonModel.from(personRepository.save(person));
