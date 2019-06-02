@@ -1,6 +1,9 @@
 
-insert into person(name, surname, age, country) values('Pablo', 'Perez', 22, 'Spain');
-insert into person(name, surname, age, country,father_id) values(' hu', 'Perez', 22, 'Spain',1);
+insert into person(name, surname, age, country) values('Pablo', 'Ruiz', 22, 'Spain');
+insert into person(name, surname, age, country) values(' hu', 'Perez', 22, 'Spain');
+insert into person(name, surname, age, country) values('Pablo', 'Ruiz', 22, 'Spain');
+insert into person(name, surname, age, country) values('Pablo', 'Ruiz', 22, 'Spain');
+
 
 insert into user_app(name, password) values('Cristian', '$2a$12$k4Zt1f1CYw34zkrU2P7Iz.IAyklW4yawVZtYVGqNJ2gkGj4lwsjze');
 

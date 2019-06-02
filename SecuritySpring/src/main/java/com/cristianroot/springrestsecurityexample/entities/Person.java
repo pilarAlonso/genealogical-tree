@@ -6,12 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	@NotNull
 	private String name ;
 	@NotNull
@@ -79,5 +80,8 @@ public class Person {
 
 	public void setSons(List<Person> sons) {
 		this.sons = sons;
+	}
+	public void addSon(Person person){
+		sons.add(person);
 	}
 }

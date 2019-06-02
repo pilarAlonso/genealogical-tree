@@ -87,10 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			.authorizeRequests()
             //funciona
-			.antMatchers(HttpMethod.GET).permitAll()
-			.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
-			.antMatchers("/auth/login").permitAll()
-			.anyRequest().hasAnyRole("ADMIN", "USER");
+			//.antMatchers(HttpMethod.GET).permitAll()
+			//.antMatchers(HttpMethod.DELETE).hasAuthority(AuthorityName.ROLE_ADMIN.toString())
+			//.antMatchers("/auth/login").permitAll()
+			//.anyRequest().hasAnyRole("ADMIN", "USER");
+		    .anyRequest().permitAll();
 
 
 
