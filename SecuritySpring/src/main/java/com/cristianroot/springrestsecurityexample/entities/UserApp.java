@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +21,12 @@ public class UserApp implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@NotNull
 	private String name;
+	@NotNull
 	private String password;
 	@ManyToMany
 	private List<Authority> authorities;
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

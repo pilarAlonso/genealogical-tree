@@ -1,5 +1,6 @@
 package com.cristianroot.springrestsecurityexample.entities;
 
+import com.cristianroot.springrestsecurityexample.models.PersonModel;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class Person {
 	private Person father;
 	@OneToMany(mappedBy = "father",cascade ={CascadeType.REMOVE,CascadeType.REFRESH})
 	private List<Person> sons=new ArrayList<>();
+
+
 
 	public Long getId() {
 		return id;

@@ -1,4 +1,4 @@
-package Person;
+package com.cristianroot.springrestsecurityexample.Person;
 
 import com.cristianroot.springrestsecurityexample.models.PersonModel;
 import org.junit.Test;
@@ -9,8 +9,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,43 +18,31 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-public class findAll {
+public class delete {
 	@Autowired
 
 	private TestRestTemplate testRestTemplate;
 
-
-
-	public findAll() {}
-
-
-
 	@Test
 
-	public void givenValidTerm_shouldSuccessWith200AndReturnList() {
+	public void givenValidTerm_shouldSuccessWith200AndReturnVoid() {
 
-		ResponseEntity<List<PersonModel>> result =
+		UriComponents url= UriComponentsBuilder.newInstance().scheme("/people").path("/1").build();
 
-				testRestTemplate.exchange("/people",
+		ResponseEntity<PersonModel> result =
 
-										  HttpMethod.GET,
+				testRestTemplate.exchange("/people/1",
+
+										  HttpMethod.DELETE,
 
 										  new HttpEntity<>(new HttpHeaders()),
 
-										  new ParameterizedTypeReference<List<PersonModel>>() {});
+										  new ParameterizedTypeReference<PersonModel>() {
+										  });
 
+		assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
 
-
-		assertEquals(HttpStatus.OK, result.getStatusCode());
-
-		assertNotNull(result.getBody());
 
 	}
-
-
-
-
-
 
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 //revisar excepciones y limpiar codigo
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -29,6 +30,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<PersonModel> findAll() {
+
 		return personRepository.findAll().stream().map(PersonModel::from).collect(Collectors.toList());
 	}
 
@@ -50,7 +52,9 @@ public class PersonServiceImpl implements PersonService {
 		person.setSurname(personModel.getSurname());
 		person.setAge(personModel.getAge());
 		person.setCountry(personModel.getCountry());
-		person.setFather(personRepository.findById(personModel.getFatherModel()).get());
+		if (personModel.getFatherModel() != 0) {
+			person.setFather(personRepository.findById(personModel.getFatherModel()).get());
+		}
 
 		return PersonModel.from(personRepository.save(person));
 
@@ -67,30 +71,32 @@ public class PersonServiceImpl implements PersonService {
 				throw new DuplicatedEntityException();
 			}
 		}
-		Person person2 = personRepository.findById(personModel.getSonModel()).get();
-		if (!personModel.getSurname().equalsIgnoreCase(person2.getSurname())) {
-			throw new Exception("los apellidos del padre deben coincidir con los del hijo");
-		}
-		Person person1 = personRepository.findById(personModel.getFatherModel()).get();
-		if (!personModel.getSurname().equalsIgnoreCase(person1.getSurname())) {
-			throw new Exception("los apellidos del padre deben coincidir con los del hijo");
-		}
-		if (modelId == person2.getId()) {
+
+		if (modelId == personModel.getSonModel()) {
 			throw new IllegalOperationException("la entidad no puede ser hija de sí misma");
 		}
-		if (modelId == person1.getId()) {
+		if (modelId == personModel.getFatherModel()) {
 			throw new IllegalOperationException("la entidad no puede ser padre de sí misma");
 		}
-		if (person1.getId() == person2.getId()) {
+		if (personModel.getSonModel() == personModel.getFatherModel()) {
 			throw new IllegalOperationException("No es posible añadir a un padre como hijo");
 		}
 		person.setName(personModel.getName());
 		person.setCountry(personModel.getCountry());
 		person.setAge(personModel.getAge());
 		person.setSurname(personModel.getSurname());
-		person.setFather(personRepository.findById(personModel.getFatherModel()).get());
-		personModel.addSon(person2);
-		person.setSons(personModel.getSonList());
+
+		if (personModel.getFatherModel() != 0) {
+			personRepository.findById(personModel.getFatherModel()).orElseThrow(() -> new EntityNotFoundException(Person.class, personModel.getFatherModel()));
+			person.setFather(personRepository.findById(personModel.getFatherModel()).get());
+		}
+		if (personModel.getSonModel() != 0) {
+			personRepository.findById(personModel.getSonModel()).orElseThrow(() -> new EntityNotFoundException(Person.class, personModel.getSonModel()));
+			Person person1=personRepository.findById(personModel.getSonModel()).get();
+            person.addSon(person1);
+			personModel.setSonList(person.getSons().stream().map(PersonModel::from).collect(Collectors.toList()));
+
+		}
 
 		return PersonModel.from(personRepository.save(person));
 

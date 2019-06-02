@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 //revisar
 
 public class PersonModel {
@@ -16,14 +17,14 @@ public class PersonModel {
 	private String name;
 	@NotNull
 	private String surname;
-
+	@NotNull
 	private int age;
+	@NotNull
 	private String country;
 	private long fatherModel;
 	private long sonModel;
 	@JsonProperty
-	private List<Person>sonList=new ArrayList<>();
-
+	private List<PersonModel> sonList = new ArrayList<>();
 
 	public long getFatherModel() {
 		return fatherModel;
@@ -41,28 +42,30 @@ public class PersonModel {
 		this.sonModel = sonModel;
 	}
 
+
+
 	public static PersonModel from(Person person) {
 		PersonModel personModel = new PersonModel();
-		personModel.setId(person.getId());
 		personModel.setName(person.getName());
 		personModel.setAge(person.getAge());
 		personModel.setId(person.getId());
 		personModel.setCountry(person.getCountry());
 		personModel.setSurname(person.getSurname());
-		if(person.getFather()!=null){ personModel.setFatherModel(person.getFather().getId());}
-		personModel.setSonList(person.getSons());
+		if (person.getFather() != null) personModel.setFatherModel(person.getFather().getId());
+		if (!person.getSons().isEmpty()) personModel.setSonList(person.getSons().stream().map(PersonModel::from).collect(Collectors.toList()));
 
 		return personModel;
 	}
-	public void addSon(Person personModel){
+
+	public void addSon(PersonModel personModel) {
 		sonList.add(personModel);
 	}
 
-	public List<Person> getSonList() {
+	public List<PersonModel> getSonList() {
 		return sonList;
 	}
 
-	public void setSonList(List<Person> sonList) {
+	public void setSonList(List<PersonModel> sonList) {
 		this.sonList = sonList;
 	}
 
@@ -105,8 +108,5 @@ public class PersonModel {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-
-
 
 }

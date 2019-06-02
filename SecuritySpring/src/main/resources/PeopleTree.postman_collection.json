@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "1411b581-0ed4-4596-be75-9a30c0ea523e",
+		"name": "PeopleTree",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n      \n  \n        \n    \"name\": \"Pal\",\n    \"surname\": \"Ruiz\",\n    \"age\": 22,\n    \"country\": \"Spain\",\n    \"fatherModel\": 3\n        \n      \n        \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/people",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"people"
+					]
+				},
+				"description": "create person and relationship"
+			},
+			"response": []
+		},
+		{
+			"name": "findOne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n      \n  \n        \n    \"name\": \"Pal\",\n    \"surname\": \"Ruiz\",\n    \"age\": 22,\n    \"country\": \"Spain\",\n    \"fatherModel\": 2 ,\n    \"sonModel\":3\n        \n      \n        \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/people/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"people",
+						"1"
+					]
+				},
+				"description": "getting the selected entity"
+			},
+			"response": []
+		},
+		{
+			"name": "modify",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "username",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n      \n  \n   \"id\":5,\n    \"name\": \"Pa\",\n    \"surname\": \"Ruiz\",\n    \"age\": 22,\n    \"country\": \"Spain\",\n    \"fatherModel\": 4,\n    \"sonModel\": 2\n    \n    \n        \n      \n        \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/people/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"people",
+						"5"
+					]
+				},
+				"description": "modify person"
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "username",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n      \n  \n   \"id\":5,\n    \"name\": \"Pa\",\n    \"surname\": \"Ruiz\",\n    \"age\": 22,\n    \"country\": \"Spain\",\n    \"fatherModel\": 4,\n    \"sonModel\": 2\n    \n    \n        \n      \n        \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/people/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"people",
+						"5"
+					]
+				},
+				"description": "delete person\n"
+			},
+			"response": []
+		},
+		{
+			"name": "findAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "password",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n      \n  \n   \"id\":5,\n    \"name\": \"Pa\",\n    \"surname\": \"Ruiz\",\n    \"age\": 22,\n    \"country\": \"Spain\",\n    \"fatherModel\": 4,\n    \"sonModel\": 2\n    \n    \n        \n      \n        \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/people",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"people"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
