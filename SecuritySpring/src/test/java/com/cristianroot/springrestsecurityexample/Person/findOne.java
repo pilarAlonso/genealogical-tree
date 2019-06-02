@@ -29,7 +29,7 @@ public class findOne {
 	@Test
 
 	public void givenValidTerm_shouldSuccessWith200AndReturnObject() {
-		UriComponents url= UriComponentsBuilder.newInstance().scheme("/people").path("/1").build();
+		UriComponents url = UriComponentsBuilder.newInstance().scheme("/people").path("/1").build();
 
 		ResponseEntity<PersonModel> result =
 

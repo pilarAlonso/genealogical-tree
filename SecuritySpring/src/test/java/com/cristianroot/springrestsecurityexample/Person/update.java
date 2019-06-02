@@ -22,13 +22,14 @@ public class update {
 	@Autowired
 
 	private TestRestTemplate testRestTemplate;
+
 	public update() {
 	}
 
 	@Test
 //no funciona
 	public void givenValidTerm_shouldSuccessWith200AndReturnObject() {
-		UriComponents url= UriComponentsBuilder.newInstance().scheme("/people").path("/1").build();
+		UriComponents url = UriComponentsBuilder.newInstance().scheme("/people").path("/1").build();
 
 		ResponseEntity<PersonModel> result =
 
@@ -43,8 +44,6 @@ public class update {
 
 		assertEquals(HttpStatus.OK, result.getStatusCode());
 		assertNotNull(result.getBody());
-
-
 
 	}
 }
