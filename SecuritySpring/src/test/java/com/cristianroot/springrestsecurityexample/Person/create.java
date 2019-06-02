@@ -10,6 +10,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,6 +37,7 @@ public class create {
 	public void givenValidTerm_shouldSuccessWith200AndReturnCreatedPerson() {
 		//testRestTemplate.withBasicAuth("user","password");
 		UriComponents url = UriComponentsBuilder.newInstance().scheme("/people").build();
+		Reque;
 		Person personModel = new Person();
 		personModel.setFather(null);
 		personModel.setSons(null);
