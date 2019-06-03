@@ -37,7 +37,6 @@ public class create {
 	public void givenValidTerm_shouldSuccessWith200AndReturnCreatedPerson() {
 		//testRestTemplate.withBasicAuth("user","password");
 		UriComponents url = UriComponentsBuilder.newInstance().scheme("/people").build();
-		Reque;
 		Person personModel = new Person();
 		personModel.setFather(null);
 		personModel.setSons(null);

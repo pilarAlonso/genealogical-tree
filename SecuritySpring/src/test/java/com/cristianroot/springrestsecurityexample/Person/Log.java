@@ -34,8 +34,8 @@ public class Log {
 //no funciona
 	public void givenValidTerm_shouldSuccessWith200AndReturnToken() {
 		AuthenticationRequest request = new AuthenticationRequest();
-		request.setPassword("Pilar");
-		request.setUsername("234");
+		request.setPassword("1234");
+		request.setUsername("Pilar");
 		AuthenticationResponse response = authenticationController.getToken(request);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Auth", response.getToken());
@@ -46,7 +46,7 @@ public class Log {
 
 										  HttpMethod.POST,
 
-										  new HttpEntity<>(new HttpHeaders()),
+										  new HttpEntity<>(httpHeaders),
 
 										  new ParameterizedTypeReference<String>() {
 										  });

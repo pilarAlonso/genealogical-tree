@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-//revisar excepciones y limpiar codigo
+//falta delete
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -30,7 +30,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<PersonModel> findAll() {
-
 		return personRepository.findAll().stream().map(PersonModel::from).collect(Collectors.toList());
 	}
 
@@ -41,19 +40,18 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public PersonModel save(PersonModel personModel) throws Exception {
-
-		Person person1 = personRepository.findById(personModel.getFatherModel()).get();
+		Person person1 = personRepository.findById(personModel.getFatherModel()).orElseThrow(()-> new EntityNotFoundException(Person.class,personModel.getFatherModel()));
 		if (!personModel.getSurname().equalsIgnoreCase(person1.getSurname())) {
 			throw new Exception("los apellidos del padre deben coincidir con los del hijo");
 		}
 		Person person = new Person();
-
 		person.setName(personModel.getName());
 		person.setSurname(personModel.getSurname());
 		person.setAge(personModel.getAge());
 		person.setCountry(personModel.getCountry());
 		if (personModel.getFatherModel() != 0) {
 			person.setFather(personRepository.findById(personModel.getFatherModel()).get());
+			person1.addSon(person);
 		}
 
 		return PersonModel.from(personRepository.save(person));
@@ -90,13 +88,6 @@ public class PersonServiceImpl implements PersonService {
 			personRepository.findById(personModel.getFatherModel()).orElseThrow(() -> new EntityNotFoundException(Person.class, personModel.getFatherModel()));
 			person.setFather(personRepository.findById(personModel.getFatherModel()).get());
 		}
-		if (personModel.getSonModel() != 0) {
-			personRepository.findById(personModel.getSonModel()).orElseThrow(() -> new EntityNotFoundException(Person.class, personModel.getSonModel()));
-			Person person1 = personRepository.findById(personModel.getSonModel()).get();
-			person.addSon(person1);
-			personModel.setSonList(person.getSons().stream().map(PersonModel::from).collect(Collectors.toList()));
-		}
-
 		return PersonModel.from(personRepository.save(person));
 
 	}

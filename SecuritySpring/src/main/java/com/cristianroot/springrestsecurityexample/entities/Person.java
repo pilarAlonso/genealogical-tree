@@ -1,13 +1,9 @@
 package com.cristianroot.springrestsecurityexample.entities;
 
-import com.cristianroot.springrestsecurityexample.models.PersonModel;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Person {
@@ -15,7 +11,7 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	private String name ;
+	private String name;
 	@NotNull
 	private String surname;
 	@NotNull
@@ -24,10 +20,8 @@ public class Person {
 	private String country;
 	@ManyToOne
 	private Person father;
-	@OneToMany(mappedBy = "father",cascade ={CascadeType.REMOVE,CascadeType.REFRESH})
-	private List<Person> sons=new ArrayList<>();
-
-
+	@OneToMany
+	private List<Person> sons = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -84,7 +78,8 @@ public class Person {
 	public void setSons(List<Person> sons) {
 		this.sons = sons;
 	}
-	public void addSon(Person person){
+
+	public void addSon(Person person) {
 		sons.add(person);
 	}
 }

@@ -22,27 +22,8 @@ public class PersonModel {
 	@NotNull
 	private String country;
 	private long fatherModel;
-	private long sonModel;
 	@JsonProperty
 	private List<PersonModel> sonList = new ArrayList<>();
-
-	public long getFatherModel() {
-		return fatherModel;
-	}
-
-	public void setFatherModel(long fatherModel) {
-		this.fatherModel = fatherModel;
-	}
-
-	public long getSonModel() {
-		return sonModel;
-	}
-
-	public void setSonModel(long sonModel) {
-		this.sonModel = sonModel;
-	}
-
-
 
 	public static PersonModel from(Person person) {
 		PersonModel personModel = new PersonModel();
@@ -55,6 +36,14 @@ public class PersonModel {
 		if (!person.getSons().isEmpty()) personModel.setSonList(person.getSons().stream().map(PersonModel::from).collect(Collectors.toList()));
 
 		return personModel;
+	}
+
+	public long getFatherModel() {
+		return fatherModel;
+	}
+
+	public void setFatherModel(long fatherModel) {
+		this.fatherModel = fatherModel;
 	}
 
 	public void addSon(PersonModel personModel) {
