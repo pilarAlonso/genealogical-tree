@@ -69,15 +69,8 @@ public class PersonServiceImpl implements PersonService {
 				throw new DuplicatedEntityException();
 			}
 		}
-
-		if (modelId == personModel.getSonModel()) {
-			throw new IllegalOperationException("la entidad no puede ser hija de sí misma");
-		}
 		if (modelId == personModel.getFatherModel()) {
 			throw new IllegalOperationException("la entidad no puede ser padre de sí misma");
-		}
-		if (personModel.getSonModel() == personModel.getFatherModel()) {
-			throw new IllegalOperationException("No es posible añadir a un padre como hijo");
 		}
 		person.setName(personModel.getName());
 		person.setCountry(personModel.getCountry());
