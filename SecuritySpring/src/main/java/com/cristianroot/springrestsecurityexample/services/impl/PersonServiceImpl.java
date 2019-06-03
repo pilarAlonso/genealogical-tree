@@ -40,10 +40,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public PersonModel save(PersonModel personModel) throws Exception {
-		Person person1 = personRepository.findById(personModel.getFatherModel()).orElseThrow(()-> new EntityNotFoundException(Person.class,personModel.getFatherModel()));
-		if (!personModel.getSurname().equalsIgnoreCase(person1.getSurname())) {
-			throw new Exception("los apellidos del padre deben coincidir con los del hijo");
-		}
 		Person person = new Person();
 		person.setName(personModel.getName());
 		person.setSurname(personModel.getSurname());
@@ -51,6 +47,10 @@ public class PersonServiceImpl implements PersonService {
 		person.setCountry(personModel.getCountry());
 		if (personModel.getFatherModel() != 0) {
 			person.setFather(personRepository.findById(personModel.getFatherModel()).get());
+			Person person1 = personRepository.findById(personModel.getFatherModel()).orElseThrow(()-> new EntityNotFoundException(Person.class,personModel.getFatherModel()));
+			if (!personModel.getSurname().equalsIgnoreCase(person1.getSurname())) {
+				throw new Exception("los apellidos del padre deben coincidir con los del hijo");
+			}
 			person1.addSon(person);
 		}
 
